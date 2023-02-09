@@ -42,7 +42,7 @@
 	}
 </script>
 
-<h2>Most liked models last week 🤗</h2>
+<h2>Most liked models last month 🤗</h2>
 <div class="grid">
 	{#each models as model}
 		<div class="grid-item">
