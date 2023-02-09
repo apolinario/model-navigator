@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 
 	let models = [];
 	let cursor = null;
@@ -10,18 +10,18 @@
 
 	async function loadModels() {
 		let url =
-			'https://huggingface.co/api/models?filter=diffusers&sort=likesRecent&direction=-1&full=1&limit=25';
+			"https://huggingface.co/api/models?filter=diffusers&sort=likesRecent&direction=-1&full=1&limit=25";
 		if (cursor) {
 			url += `&cursor=${cursor}`;
 		}
 		const res = await fetch(url);
-		const linkHeader = res.headers.get('link');
+		const linkHeader = res.headers.get("link");
 		if (linkHeader) {
-			const linkHeaders = linkHeader.split(',');
+			const linkHeaders = linkHeader.split(",");
 			linkHeaders.forEach((header) => {
 				const match = header.match(/<(.+)>;\srel="next"/);
 				if (match) {
-					cursor = match[1].split('&cursor=')[1];
+					cursor = match[1].split("&cursor=")[1];
 				}
 			});
 		}
@@ -29,13 +29,16 @@
 	}
 	function getImageUrl(id, siblings) {
 		let image = siblings.find((sibling) => {
-			let extension = sibling.rfilename.split('.').pop().toLowerCase();
-			return ['jpg', 'jpeg', 'png', 'webp'].includes(extension);
+			let extension = sibling.rfilename.split(".").pop().toLowerCase();
+			return ["jpg", "jpeg", "png", "webp"].includes(extension);
 		});
 		console.log(image);
 		return image
-			? 'https://huggingface.co/' + id + '/resolve/main/' + image.rfilename
-			: 'https://picsum.photos/300/300';
+			? "https://huggingface.co/" +
+					id +
+					"/resolve/main/" +
+					image.rfilename
+			: "https://picsum.photos/300/300";
 	}
 </script>
 
@@ -43,8 +46,12 @@
 <div class="grid">
 	{#each models as model}
 		<div class="grid-item">
-			<h3>{model.id}</h3>
-			<img width="300" src={getImageUrl(model.id, model.siblings)} alt="example" />
+			<h3><a href="https://huggingface.co/{model.id}">{model.id}</a></h3>
+			<img
+				width="300"
+				src={getImageUrl(model.id, model.siblings)}
+				alt="example"
+			/>
 			<p>Likes: {model.likesRecent}</p>
 		</div>
 	{/each}
