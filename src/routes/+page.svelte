@@ -38,11 +38,12 @@
 					id +
 					"/resolve/main/" +
 					image.rfilename
-			: "https://picsum.photos/300/300";
+			: "https://placehold.co/300x300";
 	}
 </script>
 
 <h2>Most liked models last month 🤗</h2>
+<p>Diffusers models most liked on Hugging Face</p>
 <div class="grid">
 	{#each models as model}
 		<div class="grid-item">
